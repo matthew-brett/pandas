@@ -528,7 +528,11 @@ class TestBusinessDay(Base):
         assert repr(self.offset) == '<BusinessDay>'
         assert repr(self.offset2) == '<2 * BusinessDays>'
 
-        expected = '<BusinessDay: offset=datetime.timedelta(1)>'
+        import sys
+        if sys.version_info >= (3, 7):
+            expected = '<BusinessDay: offset=datetime.timedelta(days=1)>'
+        else:
+            expected = '<BusinessDay: offset=datetime.timedelta(1)>'
         assert repr(self.offset + timedelta(1)) == expected
 
     def test_with_offset(self):
